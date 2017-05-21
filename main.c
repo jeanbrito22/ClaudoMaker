@@ -18,7 +18,6 @@ int main()
 			
 			printf("Cadastrar Cliente\n");
 			
-			//O caminho do arquivo .bin para direcionar o local de abertura, ex: "/home/j/Documentos/clientes.bin".
 			FILE *pf;
 			pf = fopen("contabiliza_cadastro.bin", "rb");
 			fread(&qt_clientes, sizeof(int), 1, pf);
@@ -75,7 +74,8 @@ int main()
 				}
 
 			}
-		break;
+			main();
+			break;
 		
 		case 2:
 			
@@ -125,6 +125,7 @@ int main()
 
 			}
 
+			main();
 			break;
 		case 3:
 			printf("Consultar Laudo\n");
@@ -132,8 +133,10 @@ int main()
 		case 4:
 			printf("Sair\n");
 			break;
+			exit(1);
 		default:
 			printf("Opcao invalida\n");
+			main();
 	}
 
 		printf("\n");
