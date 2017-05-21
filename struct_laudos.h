@@ -32,7 +32,7 @@ void preencher_laudo(laudos *laudo){
 	do{
 		printf("Os produtos tinham embalagem: [1] SIM [2] NAO: ");
 		scanf("%d", &opcao);
-	}while((opcao != 1 || opcao != 2));
+	}while((opcao != 1 && opcao != 2));
 
 	if (opcao == 1){
 		strcat(laudo->opcao_embal, sim);
