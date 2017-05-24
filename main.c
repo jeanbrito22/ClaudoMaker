@@ -18,6 +18,7 @@ int main()
 			
 			printf("Cadastrar Cliente\n");
 			
+			
 			FILE *pf;
 			pf = fopen("contabiliza_cadastro.bin", "rb");
 			fread(&qt_clientes, sizeof(int), 1, pf);
@@ -74,8 +75,7 @@ int main()
 				}
 
 			}
-			main();
-			break;
+		break;
 		
 		case 2:
 			
@@ -125,7 +125,6 @@ int main()
 
 			}
 
-			main();
 			break;
 		case 3:
 			printf("Consultar Laudo\n");
@@ -133,10 +132,8 @@ int main()
 		case 4:
 			printf("Sair\n");
 			break;
-			exit(1);
 		default:
 			printf("Opcao invalida\n");
-			main();
 	}
 
 		printf("\n");
