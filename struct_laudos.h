@@ -66,7 +66,7 @@ void preencher_laudo(laudos *laudo){
 		strcat(laudo->nivel_ident, none);
 	}
 
-	printf("Conclusao: \n");
+	printf("Conclusao: ");
 	scanf(" %200[^\n]", laudo->conclusao);
 
 
