@@ -11,11 +11,18 @@ typedef struct{
 	char conclusao[200];
 }laudos;
 
+void copia_string(char *copiar, char *colar){
+	int i;
+	for (i = 0; i < strlen(copiar); i++)
+		colar[i] = copiar[i];
+	colar[i] = '\0';
+	return;
+}
 
 
 void preencher_laudo(laudos *laudo){
 	int opcao;
-	char sim[] = "Sim", nao[] = "Nao", none[] = "None";
+	char none[] = "None";
 
 	printf("CNPJ: ");
 	scanf(" %14[^\n]", laudo->cnpj);
@@ -35,9 +42,11 @@ void preencher_laudo(laudos *laudo){
 	}while(!(opcao == 1 || opcao == 2));
 
 	if (opcao == 1){
-		strcat(laudo->opcao_embal, sim);
+		fflush(stdin);
+		copia_string("Sim",laudo->opcao_embal);
 		
 		printf("Qual o estado da embalagem: ");
+		fflush(stdin);
 		scanf(" %20[^\n]", laudo->estado_embalagem);
 
 		printf("Qual a condicao da embalagem: ");
@@ -45,11 +54,11 @@ void preencher_laudo(laudos *laudo){
 	}
 	else{
 		fflush(stdin);
-		strcat(laudo->opcao_embal, nao);
+		copia_string("Nao", laudo->opcao_embal);
 		fflush(stdin);
-		strcat(laudo->estado_embalagem, none);
+		copia_string("None", laudo->estado_embalagem);
 		fflush(stdin);
-		strcat(laudo->cond_embal, none);
+		copia_string("None",laudo->cond_embal);
 	}
 
 
@@ -59,14 +68,14 @@ void preencher_laudo(laudos *laudo){
 	}while(!(opcao == 1 || opcao == 2));
 
 	if (opcao == 1){
-		strcat(laudo->opcao_pragas, sim);
+		copia_string("Sim",laudo->opcao_pragas);
 		printf("Qual o nivel de identificacao? : ");
 		scanf(" %20[^\n]", laudo->nivel_ident);
 
 	}
 	else{
-		strcat(laudo->opcao_pragas, nao);
-		strcat(laudo->nivel_ident, none);
+		copia_string("Nao", laudo->opcao_pragas);
+		copia_string("None", laudo->nivel_ident);
 	}
 
 	printf("Conclusao: ");

@@ -9,9 +9,15 @@ void contabiliza_cadastro(void)
 	//Escrevendo...
 	quantidade = lendo_quantidade + 1;
 	pf = fopen("contabiliza_cadastro.bin", "wb");
-	fwrite(&quantidade, sizeof(int), 1, pf);
+	if(!pf){
+		printf("erro na abertura do arquivo");
+		exit(1);
+	}
+	if(fwrite(&quantidade, sizeof(int), 1, pf) != 1){
+		printf("Erro na escrita do arquivo\n");
+	}
 	fclose(pf);
-	printf("Numero de clientes cadastrados: %d\n", quantidade);
+	printf("\n\nNumero de clientes cadastrados: %d\n\n", quantidade);
 	//fread(&quantidade);
 	return;
 }

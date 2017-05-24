@@ -25,10 +25,10 @@ void preencher_cliente(clientes * c)
 void exibir_cliente(clientes c)
 {
 
-	printf("%s\n", c.cnpj);
-	printf("%s\n", c.nome);
-	printf("%s\n", c.endereco);
-	printf("%s\n", c.email);
+	printf("CNPJ: %s\n", c.cnpj);
+	printf("Nome: %s\n", c.nome);
+	printf("ENdereco: %s\n", c.endereco);
+	printf("E-mail: %s\n", c.email);
 
 	return;
 }

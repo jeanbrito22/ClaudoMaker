@@ -30,8 +30,15 @@ int main()
 				
 				FILE *pf;
 				pf = fopen("contabiliza_cadastro.bin", "rb");
-				fread(&qt_clientes, sizeof(int), 1, pf);
-				fclose(pf); 
+				if(!pf){
+					printf("Erro na abertura do arquivo"); 
+					exit(0);
+				}
+
+				if(fread(&qt_clientes, sizeof(int), 1, pf) != 1){
+					printf("Erro na leitura do arquivo");
+				}
+				fclose(pf);
 
 				if(qt_clientes == 0){
 					//Criando o cliente e chamando as funcoes do "struct_clientes.h" para preenchimento dos dados do cliente.
@@ -39,17 +46,28 @@ int main()
 					preencher_cliente(&cliente);
 					exibir_cliente(cliente); //exibindo os dados do cliente para ver se esta correto.
 					//armazenar os clientes(struct) em um arquivo .bin
-					FILE *pf;
 					pf = fopen("clientes.bin", "wb");
-					fwrite(&cliente, sizeof(cliente), 1, pf);
-					fclose(pf);
+					if (!pf){
+						printf("Erro na abertura do arquivo\n");
+						exit(1);
+					}
+					if(fwrite(&cliente, sizeof(cliente), 1, pf) != 1){
+						printf("Erro na escrita do arquivo\n");
+					}
 					contabiliza_cadastro();
+					fclose(pf);
 				}else{
 					// Quantidade de clientes para se armazenar no vetor da struct.
 					clientes cliente_cadastrado[qt_clientes];
 					// Guardando todos os clientes cadastrados no vetor da struct clientes.
 					pf = fopen("clientes.bin", "rb");
-					fread(&cliente_cadastrado, sizeof(cliente_cadastrado), 1, pf);
+					if(!pf){
+						printf("Erro na abertura do arquivo\n");
+						exit(1);
+					}
+					if(fread(&cliente_cadastrado, sizeof(cliente_cadastrado), 1, pf) != 1){
+						printf("erro na leitura do arquivo\n");
+					}
 					fclose(pf);
 
 					printf("\n\n\nNUMERO DE CLIENTES CADASTRADOS: %d\n\n\n", qt_clientes);
@@ -72,21 +90,29 @@ int main()
 						}
 						
 						if (check_cpf == 14){
-							printf("\nCNPJ ja cadastrado!!\n");
+							printf("*----------------------------------------------------------------------------------------------*\n");
+							printf("*                                   CNPJ JA CADASTRADO                                         *\n");
+							printf("*----------------------------------------------------------------------------------------------*\n\n");
 							break;
 						}else{
-							pf = fopen("clientes.bin", "a+b");
-							fwrite(&cliente, sizeof(cliente), 1, pf);
+							printf("*----------------------------------------------------------------------------------------------*\n");
+							printf("*                                   CLIENTE CADASTRADO COM SUCESSO                             *\n");
+							printf("*----------------------------------------------------------------------------------------------*\n\n");
+							pf = fopen("clientes.bin", "ab");
+							if(!pf){
+								printf("erro na abertura do arquivo\n");
+								exit(1);
+							}
+							if(fwrite(&cliente, sizeof(cliente), 1, pf) != 1){
+								printf("erro na abertura do arquivo\n");
+								contabiliza_cadastro();
+							}
 							fclose(pf);
-							contabiliza_cadastro();
 							break;
 						}
 					}
 
 				}
-				printf("*----------------------------------------------------------------------------------------------*\n");
-				printf("*                                   CLIENTE CADASTRADO COM SUCESSO                             *\n");
-				printf("*----------------------------------------------------------------------------------------------*\n\n");
 				system("pause || echo Presione ENTER para continuar... && sed -n q </dev/tty");
 				system("cls || clear");
 			break;
@@ -127,7 +153,7 @@ int main()
 						if (check_cpf == 14){
 							check_laudo = 1;
 							printf("*----------------------------------------------------------------------------------------------*\n");
-							printf("*                                   CLIENTE CADASTRADO COM SUCESSO                              *\n");
+							printf("*                                   LAUDO CADASTRADO COM SUCESSO                              *\n");
 							printf("*----------------------------------------------------------------------------------------------*\n\n");
 							
 							printf("Cliente: %s\n", cliente_cadastrado[i].nome);
