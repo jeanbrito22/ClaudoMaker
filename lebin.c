@@ -15,4 +15,6 @@ int main()
 	printf("Cadastros criados: %d\n", cadastros);
 	printf("Laudos criados: %d\n", laudos);
 
+	return 0;
+
 }
