@@ -55,7 +55,7 @@ int main()
 					printf("\n\n\nNUMERO DE CLIENTES CADASTRADOS: %d\n\n\n", qt_clientes);
 					printf("CNPJS CADASTRADOS: \n");
 					for (i = 0; i < qt_clientes; i++){
-						printf("%s\n",cliente_cadastrado[i].cnpj);
+						printf("%s\n",cliente_cadastrado[i].cnpj);	
 					}
 					printf("\n\n\n");
 
@@ -85,7 +85,7 @@ int main()
 
 				}
 				printf("*----------------------------------------------------------------------------------------------*\n");
-				printf("*                                   CADASTRO DE CLIENTE                                        *\n");
+				printf("*                                   CLIENTE CADASTRADO COM SUCESSO                             *\n");
 				printf("*----------------------------------------------------------------------------------------------*\n\n");
 				system("pause || echo Presione ENTER para continuar... && sed -n q </dev/tty");
 				system("cls || clear");
@@ -139,7 +139,6 @@ int main()
 							break;
 							}
 					}
-					printf("\nCHECK LAUDO: %d\n", check_laudo);
 
 					if (check_laudo == 1){
 						pf = fopen("laudos.bin", "wb");

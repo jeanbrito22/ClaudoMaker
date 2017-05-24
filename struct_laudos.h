@@ -44,8 +44,11 @@ void preencher_laudo(laudos *laudo){
 		scanf(" %20[^\n]", laudo->cond_embal);
 	}
 	else{
+		fflush(stdin);
 		strcat(laudo->opcao_embal, nao);
+		fflush(stdin);
 		strcat(laudo->estado_embalagem, none);
+		fflush(stdin);
 		strcat(laudo->cond_embal, none);
 	}
 
