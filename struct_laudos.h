@@ -19,13 +19,28 @@ void copia_string(char *copiar, char *colar){
 	return;
 }
 
+void validar_cnpj_laudo(char *cnpj){
+	int valido, i;
+	do{
+		printf("CNPJ [apenas numeros]: ");
+		scanf(" %14[^\n]",  cnpj);
+		valido = 1;
+		for (i = 0; i < strlen(cnpj); i++){
+			if (!isdigit(cnpj[i])){
+				valido = 0;
+				break;
+			}
+		}
+	}while(strlen(cnpj) != 14 ||  valido == 0);
+
+	return;
+}
+
 
 void preencher_laudo(laudos *laudo){
 	int opcao;
-	char none[] = "None";
 
-	printf("CNPJ: ");
-	scanf(" %14[^\n]", laudo->cnpj);
+	validar_cnpj_laudo(laudo->cnpj);
 
 	printf("Nome do produto: ");
 	scanf(" %50[^\n]", laudo->nome_produto);
@@ -39,12 +54,12 @@ void preencher_laudo(laudos *laudo){
 	do{
 		printf("Os produtos tinham embalagem: [1] SIM [2] NAO: ");
 		scanf("%d", &opcao);
-	}while(!(opcao == 1 || opcao == 2));
+	}while(opcao != 1 && opcao != 2);
 
 	if (opcao == 1){
 		fflush(stdin);
 		copia_string("Sim",laudo->opcao_embal);
-		
+
 		printf("Qual o estado da embalagem: ");
 		fflush(stdin);
 		scanf(" %20[^\n]", laudo->estado_embalagem);
@@ -65,7 +80,7 @@ void preencher_laudo(laudos *laudo){
 	do{
 		printf("Os produtos tinham praga: [1] SIM [2] NAO: ");
 		scanf("%d", &opcao);
-	}while(!(opcao == 1 || opcao == 2));
+	}while(opcao != 1 && opcao != 2);
 
 	if (opcao == 1){
 		copia_string("Sim",laudo->opcao_pragas);

@@ -5,7 +5,7 @@ typedef struct{
 	char email[51];
 }clientes;
 
-void validarCNPJ(char *cnpj){
+void validar_cnpj_cliente(char *cnpj){
 	int valido, i;
 	do{
 		printf("CNPJ [apenas numeros]: ");
@@ -24,7 +24,7 @@ void validarCNPJ(char *cnpj){
 
 void preencher_cliente(clientes * c)
 {
-	validarCNPJ(c->cnpj);
+	validar_cnpj_cliente(c->cnpj);
 
 	printf("Nome: ");
 	scanf(" %50[^\n]", c->nome);
