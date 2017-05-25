@@ -45,6 +45,7 @@ int main()
 					//Criando o cliente e chamando as funcoes do "struct_clientes.h" para preenchimento dos dados do cliente.
 					clientes cliente;
 					preencher_cliente(&cliente);
+					printf("\n");
 					exibir_cliente(cliente); //exibindo os dados do cliente para ver se esta correto.
 					//armazenar os clientes(struct) em um arquivo .bin
 					pf = fopen("clientes.bin", "wb");
