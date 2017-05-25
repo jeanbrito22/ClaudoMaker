@@ -38,7 +38,7 @@ void validar_cnpj_laudo(char *cnpj){
 
 
 void preencher_laudo(laudos *laudo){
-	int opcao;
+	int opcao, opcao_embalagem1, opcao_embalagem2;
 
 	validar_cnpj_laudo(laudo->cnpj);
 
@@ -60,12 +60,31 @@ void preencher_laudo(laudos *laudo){
 		fflush(stdin);
 		copia_string("Sim",laudo->opcao_embal);
 
-		printf("Qual o estado da embalagem: ");
-		fflush(stdin);
-		scanf(" %20[^\n]", laudo->estado_embalagem);
+		do{
+			printf("Qual o estado da embalagem:  [1] ABERTA [2] FECHADA: ");
+			scanf("%d", &opcao_embalagem1);
+		}while(opcao_embalagem1 != 1 && opcao_embalagem1 != 2);
 
-		printf("Qual a condicao da embalagem: ");
-		scanf(" %20[^\n]", laudo->cond_embal);
+
+		if (opcao_embalagem1 == 1)
+			copia_string("Aberta", laudo->estado_embalagem);
+		else
+			copia_string("Fechada", laudo->estado_embalagem);
+
+
+		do{
+			printf("Qual a condicao da embalagem: [1] SEM ALTERACOES FISICAS [2] COM ORIFICIOS [3] RASGADA:  ");
+			scanf("%d", &opcao_embalagem2);
+		}while(opcao_embalagem2 != 1 && opcao_embalagem2 != 2 && opcao_embalagem2 != 3);
+
+
+		if (opcao_embalagem2 == 1)
+			copia_string("Sem alteracoes fisicas", laudo->cond_embal);
+		else if (opcao_embalagem2 == 2)
+			copia_string("Com orificios", laudo->cond_embal);
+		else
+			copia_string("Rasgada", laudo->cond_embal);
+
 	}
 	else{
 		fflush(stdin);
