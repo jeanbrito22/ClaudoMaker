@@ -8,7 +8,7 @@
 int main()
 {
 	int var, qt_clientes, i, j, check_cpf, check_laudo = 0;
-	
+
 	do {
 		system("cls || clear");
 		printf("*----------------------------------------------------------------------------------------------*\n");
@@ -21,17 +21,17 @@ int main()
         printf("\nOpcao....> ");
         scanf("%d", &var);
 		switch(var){
-			case 1:		
+			case 1:
 				system("cls || clear");
 				printf("*----------------------------------------------------------------------------------------------*\n");
 				printf("*                                   CADASTRO DE CLIENTE                                        *\n");
 				printf("*----------------------------------------------------------------------------------------------*\n\n");
-				
-				
+
+
 				FILE *pf;
 				pf = fopen("contabiliza_cadastro.bin", "rb");
 				if(!pf){
-					printf("Erro na abertura do arquivo"); 
+					printf("Erro na abertura do arquivo");
 					exit(0);
 				}
 
@@ -73,14 +73,14 @@ int main()
 					printf("\n\n\nNUMERO DE CLIENTES CADASTRADOS: %d\n\n\n", qt_clientes);
 					printf("CNPJS CADASTRADOS: \n");
 					for (i = 0; i < qt_clientes; i++){
-						printf("%s\n",cliente_cadastrado[i].cnpj);	
+						printf("%s\n",cliente_cadastrado[i].cnpj);
 					}
 					printf("\n\n\n");
 
 					clientes cliente;
 					preencher_cliente(&cliente);
 					exibir_cliente(cliente);
-					
+
 					for (i = 0; i < qt_clientes; i++){
 						check_cpf = 0;
 						for (j = 0; j < 14; j++){
@@ -88,7 +88,7 @@ int main()
 								check_cpf++;
 							}
 						}
-						
+
 						if (check_cpf == 14){
 							printf("*----------------------------------------------------------------------------------------------*\n");
 							printf("*                                   CNPJ JA CADASTRADO                                         *\n");
@@ -116,28 +116,28 @@ int main()
 				system("pause || echo Presione ENTER para continuar... && sed -n q </dev/tty");
 				system("cls || clear");
 			break;
-			
+
 			case 2:
 				system("cls || clear");
 				printf("*----------------------------------------------------------------------------------------------*\n");
 				printf("*                                   ELABORACAO DE LAUDO                                        *\n");
 				printf("*----------------------------------------------------------------------------------------------*\n\n");
-				
+
 				laudos laudo;
 				preencher_laudo(&laudo);
 
 				pf = fopen("contabiliza_cadastro.bin", "rb");
 				fread(&qt_clientes, sizeof(int), 1, pf);
-				fclose(pf); 
+				fclose(pf);
 
 				if (qt_clientes == 0){
 					printf("*----------------------------------------------------------------------------------------------*\n");
 					printf("*                                        NAO HA CLIENTES CADASTRADOS                           *\n");
 					printf("*----------------------------------------------------------------------------------------------*\n\n");
 				}else{
-					
+
 					clientes cliente_cadastrado[qt_clientes];
-					
+
 					pf = fopen("clientes.bin", "rb");
 					fread(&cliente_cadastrado, sizeof(cliente_cadastrado), 1, pf);
 					fclose(pf);
@@ -149,13 +149,13 @@ int main()
 								check_cpf++;
 							}
 						}
-						
+
 						if (check_cpf == 14){
 							check_laudo = 1;
 							printf("*----------------------------------------------------------------------------------------------*\n");
 							printf("*                                   LAUDO CADASTRADO COM SUCESSO                              *\n");
 							printf("*----------------------------------------------------------------------------------------------*\n\n");
-							
+
 							printf("Cliente: %s\n", cliente_cadastrado[i].nome);
 							exibir_laudo(laudo);
 							printf("\n");
@@ -175,7 +175,7 @@ int main()
 
 				}
 				system("pause || echo Presione ENTER para continuar... && sed -n q </dev/tty");
-				
+
 				break;
 			case 0:
 				printf("*----------------------------------------------------------------------------------------------*\n");

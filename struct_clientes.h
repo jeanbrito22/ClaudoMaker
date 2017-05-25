@@ -5,12 +5,27 @@ typedef struct{
 	char email[51];
 }clientes;
 
+void validarCNPJ(char *cnpj){
+	int valido, i;
+	do{
+		printf("CNPJ [apenas numeros]: ");
+		scanf(" %14[^\n]",  cnpj);
+		valido = 1;
+		for (i = 0; i < strlen(cnpj); i++){
+			if (!isdigit(cnpj[i])){
+				valido = 0;
+				break;
+			}
+		}
+	}while(strlen(cnpj) != 14 ||  valido == 0);
+
+	return;
+}
 
 void preencher_cliente(clientes * c)
 {
-	printf("CNPJ: ");
-	scanf(" %14[^\n]", c->cnpj);
-	
+	validarCNPJ(c->cnpj);
+
 	printf("Nome: ");
 	scanf(" %50[^\n]", c->nome);
 
