@@ -42,7 +42,7 @@ void exibir_cliente(clientes c)
 
 	printf("CNPJ: %s\n", c.cnpj);
 	printf("Nome: %s\n", c.nome);
-	printf("ENdereco: %s\n", c.endereco);
+	printf("Endereco: %s\n", c.endereco);
 	printf("E-mail: %s\n", c.email);
 
 	return;
