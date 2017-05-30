@@ -2,13 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 #include "struct_clientes.h"
 #include "contabiliza_cadastro.h"
 #include "struct_laudos.h"
 #include "contabiliza_laudo.h"
 int main()
 {
-	int var, qt_clientes, i, j, check_cpf, check_laudo = 0;
+	int var, tam_arq, i, j, check_cnpj = 0, check_laudo = 0;
+	int qt_clientes = 0;
 
 	do {
 		system("cls || clear");
@@ -28,19 +30,23 @@ int main()
 				printf("*                                   CADASTRO DE CLIENTE                                        *\n");
 				printf("*----------------------------------------------------------------------------------------------*\n\n");
 
-
-				FILE *pf;
-				pf = fopen("contabiliza_cadastro.bin", "rb");
-				if(!pf){
-					printf("Erro na abertura do arquivo");
-					exit(0);
+				FILE *fp;
+				if( access( "clientes.bin", F_OK ) != -1 ) {
+  					  // se arquivo existir
+					fp = fopen("clientes.bin", "rb");
+					fseek(fp, 0, SEEK_END);
+					tam_arq = ftell(fp);
+					fclose(fp);
+				} else {
+    					// se arquivo nao existir.
+					tam_arq = 0;
 				}
 
-				if(fread(&qt_clientes, sizeof(int), 1, pf) != 1){
-					printf("Erro na leitura do arquivo");
-				}
-				fclose(pf);
+				printf("TAMANHO STRUCT cliente: %ld\n", sizeof(clientes));
 
+				qt_clientes = tam_arq/sizeof(clientes);
+
+				printf("QT_CLIENTES %d\n", qt_clientes);
 				if(qt_clientes == 0){
 					//Criando o cliente e chamando as funcoes do "struct_clientes.h" para preenchimento dos dados do cliente.
 					clientes cliente;
@@ -48,29 +54,24 @@ int main()
 					printf("\n");
 					exibir_cliente(cliente); //exibindo os dados do cliente para ver se esta correto.
 					//armazenar os clientes(struct) em um arquivo .bin
-					pf = fopen("clientes.bin", "wb");
-					if (!pf){
+					fp = fopen("clientes.bin", "wb");
+					if (!fp){
 						printf("Erro na abertura do arquivo\n");
 						exit(1);
 					}
-					if(fwrite(&cliente, sizeof(cliente), 1, pf) != 1){
+					if(fwrite(&cliente, sizeof(clientes), 1, fp) != 1){
 						printf("Erro na escrita do arquivo\n");
 					}
-					contabiliza_cadastro();
-					fclose(pf);
+					fclose(fp);
 				}else{
 					// Quantidade de clientes para se armazenar no vetor da struct.
 					clientes cliente_cadastrado[qt_clientes];
 					// Guardando todos os clientes cadastrados no vetor da struct clientes.
-					pf = fopen("clientes.bin", "rb");
-					if(!pf){
-						printf("Erro na abertura do arquivo\n");
-						exit(1);
-					}
-					if(fread(&cliente_cadastrado, sizeof(cliente_cadastrado), 1, pf) != 1){
+					fp = fopen("clientes.bin", "rb");
+					if(fread(&cliente_cadastrado, sizeof(cliente_cadastrado), 1, fp) != 1){
 						printf("erro na leitura do arquivo\n");
 					}
-					fclose(pf);
+					fclose(fp);
 
 					printf("\n\n\nNUMERO DE CLIENTES CADASTRADOS: %d\n\n\n", qt_clientes);
 					printf("CNPJS CADASTRADOS: \n");
@@ -84,36 +85,31 @@ int main()
 					exibir_cliente(cliente);
 
 					for (i = 0; i < qt_clientes; i++){
-						check_cpf = 0;
-						for (j = 0; j < 14; j++){
-							if (cliente_cadastrado[i].cnpj[j] == cliente.cnpj[j]){
-								check_cpf++;
-							}
+						if(strcmp(cliente_cadastrado[i].cnpj, cliente.cnpj) == 0){
+							system("cls || clear");
+							printf("*----------------------------------------------------------------------------------------------*\n");
+							printf("*                       OPERACAO IMPOSSIVEL, CNPJ JA CADASTRADO            *\n");
+							printf("*----------------------------------------------------------------------------------------------*\n\n");
+							check_cnpj = 1;
+							break;
+						}
+					}
+					printf("\nCHECK CNPJ: %d\n",  check_cnpj);
+					if(check_cnpj == 0){
+						system("cls || clear");
+						fp = fopen("clientes.bin", "ab");
+						if(!fp){
+							printf("erro na abertura do arquivo\n");
+							exit(1);
 						}
 
-						if (check_cpf == 14){
-							system("cls || clear");
-							printf("*----------------------------------------------------------------------------------------------*\n");
-							printf("*                                   CNPJ JA CADASTRADO                                         *\n");
-							printf("*----------------------------------------------------------------------------------------------*\n\n");
-							break;
-						}else{
-							system("cls || clear");
-							printf("*----------------------------------------------------------------------------------------------*\n");
-							printf("*                                   CLIENTE CADASTRADO COM SUCESSO                             *\n");
-							printf("*----------------------------------------------------------------------------------------------*\n\n");
-							pf = fopen("clientes.bin", "ab");
-							if(!pf){
-								printf("erro na abertura do arquivo\n");
-								exit(1);
-							}
-							if(fwrite(&cliente, sizeof(cliente), 1, pf) != 1){
-								printf("erro na abertura do arquivo\n");
-								contabiliza_cadastro();
-							}
-							fclose(pf);
-							break;
+						if(fwrite(&cliente, sizeof(cliente), 1, fp) != 1){
+							printf("erro na abertura do arquivo\n");
 						}
+						fclose(fp);
+						printf("*----------------------------------------------------------------------------------------------*\n");
+						printf("*                                   CLIENTE CADASTRADO COM SUCESSO              *\n");
+						printf("*----------------------------------------------------------------------------------------------*\n\n");
 					}
 
 				}
@@ -130,9 +126,9 @@ int main()
 				laudos laudo;
 				preencher_laudo(&laudo);
 
-				pf = fopen("contabiliza_cadastro.bin", "rb");
-				fread(&qt_clientes, sizeof(int), 1, pf);
-				fclose(pf);
+				fp = fopen("contabiliza_cadastro.bin", "rb");
+				fread(&qt_clientes, sizeof(int), 1, fp);
+				fclose(fp);
 
 				if (qt_clientes == 0){
 					system("cls || clear");
@@ -143,19 +139,19 @@ int main()
 
 					clientes cliente_cadastrado[qt_clientes];
 
-					pf = fopen("clientes.bin", "rb");
-					fread(&cliente_cadastrado, sizeof(cliente_cadastrado), 1, pf);
-					fclose(pf);
+					fp = fopen("clientes.bin", "rb");
+					fread(&cliente_cadastrado, sizeof(cliente_cadastrado), 1, fp);
+					fclose(fp);
 
 					for (i = 0; i < qt_clientes; i++){
-						check_cpf = 0;
+						check_cnpj = 0;
 						for (j = 0; j < 14; j++){
 							if (cliente_cadastrado[i].cnpj[j] == laudo.cnpj[j]){
-								check_cpf++;
+								check_cnpj++;
 							}
 						}
 
-						if (check_cpf == 14){
+						if (check_cnpj == 14){
 							check_laudo = 1;
 							system("cls || clear");
 							printf("*----------------------------------------------------------------------------------------------*\n");
@@ -173,9 +169,9 @@ int main()
 					}
 
 					if (check_laudo == 1){
-						pf = fopen("laudos.bin", "wb");
-						fwrite(&laudo, sizeof(laudo), 1, pf);
-						fclose(pf);
+						fp = fopen("laudos.bin", "wb");
+						fwrite(&laudo, sizeof(laudo), 1, fp);
+						fclose(fp);
 						contabiliza_laudo();
 					}
 
