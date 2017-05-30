@@ -2,7 +2,7 @@ typedef struct{
 	char cnpj[15];
 	char nome_produto[51];
 	int qt_produto;
-	char num_chamado[21];
+	int num_chamado;
 	char opcao_embal[5];
 	char estado_embalagem[21];
 	char cond_embal[21];
@@ -49,7 +49,7 @@ void preencher_laudo(laudos *laudo){
 	scanf("%d", &laudo->qt_produto);
 
 	printf("Numero do chamado: ");
-	scanf(" %20[^\n]", laudo->num_chamado);
+	scanf("%d", &laudo->num_chamado);
 
 	do{
 		printf("Os produtos tinham embalagem: [1] SIM [2] NAO: ");
@@ -123,7 +123,7 @@ void exibir_laudo(laudos laudo){
 	printf("CNPJ: %s\n", laudo.cnpj);
 	printf("Nome do produto: %s\n", laudo.nome_produto);
 	printf("Quantidade do produto: %d\n", laudo.qt_produto);
-	printf("Numero do chamado: %s\n", laudo.num_chamado);
+	printf("Numero do chamado: %d\n", laudo.num_chamado);
 	printf("Ha embalagem: %s\n", laudo.opcao_embal);
 	printf("Estado da embalagem: %s\n", laudo.estado_embalagem);
 	printf("Condicao da embalagem: %s\n", laudo.cond_embal);
