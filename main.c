@@ -7,7 +7,7 @@
 #include "struct_laudos.h"
 int main()
 {
-	int var, tam_arq, i, j, check_cnpj = 0, check_chamado = 0;
+	int var, tam_arq, i, j, check_cnpj , check_chamado = 0;
 	int qt_clientes, qt_laudos = 0;
 	FILE *fp;
 
@@ -43,6 +43,8 @@ int main()
 
 				printf("TAMANHO STRUCT cliente: %ld\n", sizeof(clientes));
 
+				printf("TAMANHO DO ARQUIVO: %d\n",  tam_arq);
+
 				qt_clientes = tam_arq/sizeof(clientes);
 
 				if(qt_clientes == 0){
@@ -61,6 +63,7 @@ int main()
 						printf("Erro na escrita do arquivo\n");
 					}
 					fclose(fp);
+					printf("\nCliente cadastrado com sucesso !\n");
 				}else{
 					// Quantidade de clientes para se armazenar no vetor da struct.
 					clientes cliente_cadastrado[qt_clientes];
@@ -82,6 +85,8 @@ int main()
 					preencher_cliente(&cliente);
 					exibir_cliente(cliente);
 
+					// erro do CHECK_CNPJ Sempre dar 1 esta aqui, manutencao
+					check_cnpj = 0;
 					for (i = 0; i < qt_clientes; i++){
 						if(strcmp(cliente_cadastrado[i].cnpj, cliente.cnpj) == 0){
 							system("cls || clear");
@@ -163,7 +168,8 @@ int main()
 						printf("\n");
 
 					}else{
-						printf("Nenhum cliente foi encotrado com esse CNPJ ou o chamado ja esta cadastrado.\n");
+						system("clear");
+						printf("Nenhum cliente foi encotrado com esse CNPJ ou o numero chamado ja esta cadastrado.\n");
 					}
 
 				}
