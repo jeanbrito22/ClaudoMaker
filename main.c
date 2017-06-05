@@ -11,17 +11,20 @@ int main()
 	int qt_clientes, qt_laudos = 0;
 	FILE *fp;
 
+
 	do {
 		system("cls || clear");
 		printf("*----------------------------------------------------------------------------------------------*\n");
 		printf("*                                        LAUDO DE MAKER                                        *\n");
 		printf("*----------------------------------------------------------------------------------------------*\n\n");
-        printf("Escolha a opcao Desejada:\n\n");
-        printf("\tDigite 1 - Para Cadastro de Clientes\n\n");
-        printf("\tDigite 2 - Para Elaboracao de Laudos\n\n");
-        printf("\tDigite 0 - Para Sair\n");
-        printf("\nOpcao....> ");
-        scanf("%d", &var);
+
+        		printf("Escolha a opcao Desejada:\n\n");
+        		printf("\tDigite 1 - Para Cadastro de Clientes\n\n");
+        		printf("\tDigite 2 - Para Elaboracao de Laudos\n\n");
+        		printf("\tDigite 0 - Para Sair\n");
+        		printf("\nOpcao....> ");
+        		scanf("%d", &var);
+
 		switch(var){
 			case 1:
 				system("cls || clear");
@@ -91,7 +94,7 @@ int main()
 						if(strcmp(cliente_cadastrado[i].cnpj, cliente.cnpj) == 0){
 							system("cls || clear");
 							printf("*----------------------------------------------------------------------------------------------*\n");
-							printf("*                      OPERACAO IMPOSSIVEL, CNPJ JA CADASTRADO                                *\n");
+							printf("*                      OPERACAO IMPOSSIVEL, CNPJ JA CADASTRADO                                 *\n");
 							printf("*----------------------------------------------------------------------------------------------*\n\n");
 							check_cnpj = 1;
 							break;
@@ -148,6 +151,7 @@ int main()
 					fread(&cliente_cadastrado, sizeof(cliente_cadastrado), 1, fp);
 					fclose(fp);
 
+					check_cnpj = 0;
 					for (i = 0; i < qt_clientes; i++){
 						if(strcmp(cliente_cadastrado[i].cnpj, laudo.cnpj) == 0){
 							system("cls || clear");
