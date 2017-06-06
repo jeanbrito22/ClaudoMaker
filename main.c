@@ -160,7 +160,7 @@ int main()
 						}
 					}
 
-					if (check_cnpj == 1){
+					if (check_cnpj == 1 ){
 						system("cls || clear");
 						fp = fopen("laudos.bin", "wb");
 						fwrite(&laudo, sizeof(laudo), 1, fp);
