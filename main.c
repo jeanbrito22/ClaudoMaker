@@ -7,8 +7,8 @@
 #include "struct_laudos.h"
 int main()
 {
-	int var, tam_arq, tam_laudo, i, j, check_cnpj , check_chamado = 0;
-	int qt_clientes, qt_laudos = 0;
+	int var, tam_arq, tam_laudo, i, j, check_cnpj , check_chamado ;
+	int qt_clientes = 0, qt_laudos = 0;
 	FILE *fp;
 
 	do {
@@ -140,7 +140,6 @@ int main()
 
 				qt_clientes = tam_arq/sizeof(clientes);
 
-
 				if (qt_clientes == 0){
 					system("cls || clear");
 					printf("Nao ha clientes cadastrado\n");
@@ -161,44 +160,7 @@ int main()
 						}
 					}
 
-
-					//criar aqui a situacao do chamado.
-					if ( access("laudos.bin", F_OK) != -1 ){
-
-						fp = fopen("laudos.bin", "rb");
-						fseek(fp, 0, SEEK_END);
-						tam_laudo = ftell(fp);
-						fclose(fp);
-					}else{
-						tam_laudo = 0;
-					}
-
-					qt_laudos = tam_laudo/sizeof(laudos);
-
-					check_chamado = 0;
-
-					if (qt_laudos == 0){
-						check_chamado = 0;
-					}else{
-						laudos laudo_cadastrado[qt_laudos];
-						fp = fopen("laudos.bin", "rb");
-						fread(&laudo_cadastrado, sizeof(laudo_cadastrado), 1, fp);
-						fclose(fp);
-
-						check_chamado = 1;
-						for (i = 0; i < qt_laudos; i++){
-							if(laudo_cadastrado[i].num_chamado == laudo.num_chamado){
-								check_chamado = 1;
-								system("cls || clear");
-								printf("Nao foi possivel efetuar a operacao, numero do chamado ja cadastrado !\n");
-								break;
-							}
-						}
-
-					}
-
-					printf("\nCheck_Chamado: %d\n", check_chamado);
-					if (check_cnpj == 1 && check_chamado == 0){
+					if (check_cnpj == 1){
 						system("cls || clear");
 						fp = fopen("laudos.bin", "wb");
 						fwrite(&laudo, sizeof(laudo), 1, fp);
