@@ -8,7 +8,8 @@ typedef struct{
 void validar_cnpj_cliente(char *cnpj){
 	int valido, i;
 	do{
-		printf("CNPJ [apenas numeros]: ");
+		system("cls || clear");
+		printf("\nCNPJ........> ");;
 		scanf(" %14[^\n]",  cnpj);
 		valido = 1;
 		for (i = 0; i < strlen(cnpj); i++){
@@ -18,22 +19,33 @@ void validar_cnpj_cliente(char *cnpj){
 			}
 		}
 	}while(strlen(cnpj) != 14 ||  valido == 0);
-
+	cnpj[15] = '\0';
 	return;
 }
 
 void preencher_cliente(clientes * c)
 {
+	system("cls || clear");
+	printf("Digite o CNPJ do Cliente a ser cadastrado .....:\n");
 	validar_cnpj_cliente(c->cnpj);
+	printf("\n");
 
-	printf("Nome: ");
+	system("cls || clear");
+	printf("Digite o Nome do Cliente a ser cadastrado .....:\n");
+	printf("\nNome........> ");
 	scanf(" %50[^\n]", c->nome);
+	printf("\n");
 
-	printf("Endereco: ");
+	printf("Digite o Endereco do Cliente a ser cadastrado..:\n");
+	printf("\nEndereco....> ");
 	scanf(" %100[^\n]", c->endereco);
+	printf("\n");
+	system("cls || clear");
 
-	printf("Email: ");
+	printf("Digite o e-mail do Cliente a ser cadastrado ...:\n");
+	printf("\nE-Mail......> ");
 	scanf(" %50[^\n]", c->email);
+	system("cls || clear");
 
 }
 
