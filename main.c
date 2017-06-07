@@ -201,9 +201,18 @@ int main()
 						exibir_laudo(laudo);
 						printf("\n");
 
+					}else if(check_cnpj != 1){
+
+						if (check_chamado == 0){
+							system("cls || clear");
+							printf("Nenhum cliente foi encontrado com esse CNPJ.\n");
+						}else{
+							system("clear || cls");
+							printf("Nenhum cliente foi encotrado com esse CNPJ  e o numero do chamado ja esta cadastrado.\n");
+						}
 					}else{
-						system("clear || cls");
-						printf("Nenhum cliente foi encotrado com esse CNPJ ou o numero chamado ja esta cadastrado.\n");
+						system("cls || clear");
+						printf("O numero do chamado ja existe\n");
 					}
 				}
 				system("pause || echo Presione ENTER para continuar... && sed -n q </dev/tty");
